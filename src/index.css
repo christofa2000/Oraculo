@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 /* Fuente Orbitron */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap");
 .font-orbitron {
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
 }
 
 /* Fondo de estrellas */
@@ -18,39 +18,46 @@
 }
 
 .stars {
-  background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+  background: url("https://www.transparenttextures.com/patterns/stardust.png")
+    repeat;
   animation: moveStars 200s linear infinite;
   z-index: 0;
 }
 
 .twinkling {
-  background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+  background: url("https://www.transparenttextures.com/patterns/stardust.png")
+    repeat;
   opacity: 0.5;
   animation: moveTwinkling 100s linear infinite;
   z-index: 1;
 }
 
 @keyframes moveStars {
-  from { background-position: 0 0; }
-  to   { background-position: -10000px 5000px; }
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -10000px 5000px;
+  }
 }
 
 @keyframes moveTwinkling {
-  from { background-position: 0 0; }
-  to   { background-position: 10000px 5000px; }
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 10000px 5000px;
+  }
 }
 
 /* Texto con efecto glow */
 @keyframes glow {
-  0%, 100% {
-    text-shadow: 0 0 8px #7f00ff,
-                 0 0 16px #00bfff,
-                 0 0 32px #7f00ff;
+  0%,
+  100% {
+    text-shadow: 0 0 8px #7f00ff, 0 0 16px #00bfff, 0 0 32px #7f00ff;
   }
   50% {
-    text-shadow: 0 0 24px #b26cff,
-                 0 0 48px #40c4ff,
-                 0 0 64px #7f00ff;
+    text-shadow: 0 0 24px #b26cff, 0 0 48px #40c4ff, 0 0 64px #7f00ff;
   }
 }
 
@@ -59,7 +66,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: glow 3s ease-in-out infinite;
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
 }
 
 /* Animación de aparición */
@@ -96,8 +103,8 @@
   height: 150px;
   background: linear-gradient(
     to bottom,
-    rgba(255,255,255,0.8) 0%,
-    rgba(255,255,255,0.2) 100%
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.2) 100%
   );
   opacity: 0;
 
@@ -119,6 +126,65 @@
   }
   to {
     opacity: 0;
-    transform: rotate(var(--angle)) translateY(var(--distance)) scale(var(--scale));
+    transform: rotate(var(--angle)) translateY(var(--distance))
+      scale(var(--scale));
   }
+}
+/* OJO del título — tracking por mouse (translate) */
+.oracle-badge-wrap {
+  display: inline-block;
+  transform: translate(var(--dx, 0), var(--dy, 0));
+  transition: transform 120ms ease;
+  will-change: transform;
+}
+
+/* Pulso general (escala) */
+.oracle-badge-pulse {
+  display: inline-block;
+  transform-origin: center;
+  animation: oraclePulse 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Parpadeo + brillo del PNG/SVG */
+.oracle-badge {
+  display: block;
+  transform-origin: center;
+  animation: oracleBlink 8s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.8)); /* violeta */
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Si tu imagen es oscura y querés blanco puro, activá esto:
+.oracle-badge { filter: brightness(0) invert(1) drop-shadow(0 0 14px rgba(168,85,247,.9)); }
+*/
+
+/* Pulso suave */
+@keyframes oraclePulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+/* Parpadeo rápido + microblink */
+@keyframes oracleBlink {
+  0%,
+  46%,
+  48%,
+  79%,
+  81%,
+  100% {
+    transform: scaleY(1);
+  }
+  47% {
+    transform: scaleY(0.07);
+  } /* blink principal */
+  80% {
+    transform: scaleY(0.92);
+  } /* microblink */
 }
