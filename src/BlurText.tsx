@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import type { JSX } from "react";
 
 type BlurTextProps = {
   text: string;
@@ -21,8 +22,8 @@ export default function BlurText({
   stepDuration = 0.35,
   as = "div",
 }: BlurTextProps) {
-  const Wrapper = as as any;
-  const ref = useRef<HTMLDivElement | null>(null);
+  const Wrapper: React.ElementType = as;
+  const ref = useRef<HTMLSpanElement | null>(null);
   const [visible, setVisible] = useState(false);
   const [inView, setInView] = useState(false);
 
@@ -77,7 +78,8 @@ export default function BlurText({
   const isUp = direction === "top";
 
   return (
-    <Wrapper ref={ref} className={className} aria-label={text}>
+    <span ref={ref} aria-label={text}>
+      <Wrapper className={className}>
       {items.map((token, i) => {
         const isSpace = token === " " || token === "\n" || /^\s+$/.test(token);
         const style: CSSProperties = isSpace
@@ -97,6 +99,7 @@ export default function BlurText({
           </span>
         );
       })}
-    </Wrapper>
+      </Wrapper>
+    </span>
   );
 }

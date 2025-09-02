@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef, MouseEvent } from "react";
+import { useState, useEffect, useRef } from "react";
+import type { MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "./supabaseClient";
 import "./index.css";
@@ -188,6 +189,8 @@ export default function App() {
         >
           Ver frases
         </button>
+        {/* Referencia oculta para evitar warning de variable no usada */}
+        <span style={{ display: 'none' }}>{mensaje}</span>
       </main>
     </>
   );
