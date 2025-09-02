@@ -1,85 +1,105 @@
-# 🎁 Oráculo Sagrado
+# Oráculo Sagrado
 
-> **Proyecto de regalo de cumpleaños de Ceci**
+Aplicación web interactiva que muestra frases cósmicas aleatorias y permite agregar nuevas. Incluye fondo estrellado animado, estrellas fugaces y efectos de texto con BlurText.
 
----
+## Captura
 
-## 📝 Descripción
+![Oráculo Sagrado](public/oraculo.png)
 
-Oráculo Sagrado es una aplicación web interactiva que muestra frases cósmicas aleatorias y permite a los usuarios agregar sus propias frases. Cuenta con un **fondo estrellado animado** y **estrellas fugaces** que atraviesan la pantalla para ofrecer una experiencia mágica.
+## Tecnologías
 
----
+- React + TypeScript (Vite)
+- Tailwind CSS
+- Supabase (base de datos)
+- React Router
+- Vitest + Testing Library (tests)
 
-## 🚀 Tecnologías
+## Estructura rápida
 
-* **React + TypeScript**
-* **Vite**
-* **Tailwind CSS**
-* **Supabase** (base de datos y autenticación)
-* **React Router** (navegación)
+- `src/App.tsx`: pantalla principal (ILUMÍNAME, agregar frase, revelación con BlurText)
+- `src/FrasesPage.tsx`: listado + borrado de frases guardadas
+- `src/BlurText.tsx`: animación por palabras/letras con blur + slide
+- `src/index.css`: fondo estrellado y animaciones (estrellas, twinkling, fugaces)
+- `public/`: imágenes (`ojo.png`, `ojodios.png`, `ojo-mano.png`, `oraculo.png`)
 
----
+## Requisitos
 
-## 🔧 Instalación
+- Node 18+ (recomendado 20)
+- Cuenta de Supabase (o ajusta el cliente a otro backend)
 
-1. Clona el repositorio:
+## Instalación
 
-   ```bash
-   git clone https://github.com/<TU-USUARIO>/oraculo.git
-   cd oraculo
-   ```
-2. Instala dependencias:
+1) Instalar dependencias
 
-   ```bash
-   npm install
-   ```
-3. Configura Supabase:
+```
+npm install
+```
 
-   * Crea un proyecto en [https://supabase.com](https://supabase.com)
-   * Copia la URL y la **anon key** en un archivo `.env`:
+2) Variables de entorno (`.env`)
 
-     ```env
-     VITE_SUPABASE_URL=https://xyz.supabase.co
-     VITE_SUPABASE_ANON_KEY=tu_anon_key
-     ```
-4. Levanta el servidor de desarrollo:
+```
+VITE_SUPABASE_URL=https://<tu-proyecto>.supabase.co
+VITE_SUPABASE_ANON_KEY=<tu_anon_key>
+```
 
-   ```bash
-   npm run dev
-   ```
-5. Abre `http://localhost:5173` en tu navegador.
+3) Base de datos (tabla mínima)
 
----
+En Supabase, crea la tabla `frases`:
 
-## 📋 Uso
+```
+create table if not exists public.frases (
+  id uuid primary key default gen_random_uuid(),
+  texto text not null
+);
+```
 
-* **ILUMÍNAME**: Obtener una frase aleatoria del oráculo.
-* **Agrega tu magia**: Insertar una nueva frase cósmica en la base de datos.
-* **Ver frases**: Ver todas las frases almacenadas (botón invisible en la esquina inferior derecha).
+4) Desarrollo
 
----
+```
+npm run dev
+```
 
-## ✨ Características destacadas
+## Uso
 
-* **Fondo estrellado animado** con capas de estrellas y parpadeo.
-* **Estrellas fugaces** dinámicas con trayectoria inclinada (30°) y velocidad aleatoria.
-* **Animaciones suaves**: texto glow y aparición gradual de elementos.
-* **Responsive**: adaptado a diferentes tamaños de pantalla.
+- ILUMÍNAME: muestra una frase aleatoria de la tabla `frases`.
+- Agrega tu magia: inserta una nueva frase.
+- Ver frases: navega a `/frases` para listar y borrar.
 
----
+Nota: el botón “Ver frases” está en la esquina inferior derecha.
 
-## 🎨 Personalización
+## Tests
 
-* Ángulo de caída de meteoros: modificar `--angle` en `index.css`.
-* Frecuencia y duración: ajustar `--duration`, `--distance` y el intervalo en `App.tsx`.
-* Colores y degradados: editar clases de Tailwind o estilos en CSS.
+- Ejecutar en modo CI:
 
----
+```
+npm run test
+```
 
-## 🏷️ License
+- Modo watch:
 
-MIT © 2025 Ceci & Christian Oscar Papa
+```
+npm run test:watch
+```
 
----
+Incluye mocks de `IntersectionObserver` y `requestAnimationFrame` para testear `BlurText`.
 
-*¡Gracias por usar Oráculo Sagrado! 🌌✨*
+## Personalización
+
+- Estrellas fugaces: variables `--distance`, `--duration` y `--angle` en `src/index.css`.
+- Velocidad/frecuencia de meteoros: intervalo en `App.tsx` (hook de estrellas fugaces).
+- Animación de texto: props de `BlurText` (`animateBy`, `delay`, `stepDuration`, `direction`).
+
+## Deploy
+
+Build de producción:
+
+```
+npm run build
+```
+
+Sirve el contenido de `dist/` (Netlify, Vercel, etc.). Si usas subruta, Vite maneja `BASE_URL` automáticamente.
+
+## Licencia
+
+MIT © 2025
+
